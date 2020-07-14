@@ -1,0 +1,70 @@
+//快速排序
+void QuickSort(int data[],int left,int right)
+{
+     int i = left; 
+		 int j = right; 
+		 int key = data[left];
+	
+     if(left>=right)
+     return;
+	
+     while(i<j)
+		 {
+          while(i<j && data[j]>=key)
+             --j;
+          if(i<j)
+					{
+             data[i] = data[j];
+             ++i;
+          }
+
+         while(i<j && data[i]<key)
+             ++i;
+         if(i<j)
+				 {
+             data[j] = data[i];
+             --j;
+         }
+     }
+     data[i] = key;
+		 if(i>=1)
+     QuickSort(data, left, i-1);//递归调用
+     QuickSort(data, i+1, right);//递归调用
+ }
+
+ void HeapAdjust(int array[],int i,int nLength)
+{
+    int nChild;
+    int nTemp;
+    for(; 2 * i + 1 < nLength;i = nChild)
+    {
+        nChild = 2 * i + 1;
+
+        if(nChild < nLength - 1 && array[nChild + 1] > array[nChild]) ++nChild;
+      
+        if(array[i] < array[nChild])
+        {
+            nTemp = array[i];
+            array[i] = array[nChild];
+            array[nChild] = nTemp; 
+        }
+        else break;
+    }
+}
+//堆排序
+void HeapSort(int array[],int length)
+{
+    int i;
+
+    for(i = length / 2 - 1;i >= 0;--i)
+    HeapAdjust(array,i,length);
+    
+    for(i = length - 1;i > 0;--i)
+    {
+        array[i] = array[0] ^ array[i];
+        array[0] = array[0] ^ array[i];
+        array[i] = array[0] ^ array[i];
+       
+        HeapAdjust(array,0,i);
+    }
+}

@@ -1,0 +1,50 @@
+ void getNext(int* Next,char* Sub,int Len) 
+ {
+     int j = 0;
+     int k = -1;
+     Next[0] = -1;
+
+     while (j < Len-1) 
+    {
+        if (k == -1 || Sub[j] == Sub[k]) 
+       {
+            Next[++j] = ++k;
+       } 
+       else 
+       {
+        k = Next[k];
+       }
+     }
+ }
+
+int KMP(char* Par,char* Sub,int Sub_Len) 
+{
+    int i = 0; // 主串的位置
+    int j = 0; // 子串的位置
+    int next[20];
+    int Par_Len=strlen(Par);
+    
+    getNext(next,Sub,Sub_Len);
+
+   while (i < Par_Len && j < Sub_Len) 
+   {
+       if (j == -1 || Par[i] == Sub[j])  // 当j为-1时，要移动的是i，当然j也要归0
+       { 
+           ++i;
+           ++j;
+       } 
+      else 
+      {
+           j = next[j]; // j回到指定位置
+      }
+    }
+
+    if (j == Sub_Len) 
+    {
+       return i - j;
+    } 
+    else 
+    {
+       return -1;
+    }
+}

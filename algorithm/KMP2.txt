@@ -1,0 +1,119 @@
+ void getNext(int* Next,char* Sub,int Len) 
+ {
+     int j = 1;
+     int k = 0;
+     Next[0] = -1;
+     Next[1] = 0;
+	 
+     while (j < Len) 
+    {
+        if (Sub[j] == Sub[k]||k==0) 
+       {    
+				    if(Sub[j] == Sub[k])
+             Next[++j] = ++k;
+						else
+						 Next[++j] = k;						
+       } 
+       else 
+       {
+         k = Next[k];
+       }
+    }
+ }
+
+int KMP(char* Par,char* Sub,int Sub_Len) 
+{
+    int i = 0; // 主串的位置
+    int j = 0; // 子串的位置
+    int next[20];
+    int Par_Len=strlen(Par);
+    
+	  if(Par_Len<Sub_Len)return -1;
+    getNext(next,Sub,Sub_Len);
+
+   while (i < Par_Len && j < Sub_Len) 
+   {
+       if (j == -1 || Par[i] == Sub[j])  // 当j为-1时，要移动的是i，当然j也要归0
+       { 
+           ++i;
+           ++j;
+       } 
+      else 
+      {
+           j = next[j]; // j回到指定位置
+      }
+    }
+
+    if (j == Sub_Len) 
+    {
+       return i - j;
+    } 
+    else 
+    {
+       return -1;
+    }
+}
+
+
+
+ void getNext(int* Next,char* Sub,int Len) 
+ {
+     int j = 1;
+     int k = 0;
+     Next[0] = 0;
+     Next[1] = 0;
+	 
+     while (j < Len) 
+    {
+        if (Sub[j] == Sub[k]||k==0) 
+       {    
+				    if(Sub[j] == Sub[k])
+             Next[++j] = ++k;
+						else
+						 Next[++j] = k;						
+       } 
+       else 
+       {
+         k = Next[k];
+       }
+    }
+ }
+int KMP(char* Par,char* Sub,int Sub_Len) 
+{
+    int i = 0; // 主串的位置
+    int j = 0; // 子串的位置
+    int next[20];
+    int Par_Len=strlen(Par);
+    
+	  if(Par_Len<Sub_Len)return -1;
+    getNext(next,Sub,Sub_Len);
+
+   while (i < Par_Len && j < Sub_Len) 
+   {
+       if ( Par[i] == Sub[j]||j == 0 )  // 当j为-1时，要移动的是i，当然j也要归0
+       { 
+				  if(Par[i] == Sub[j])
+          { 
+					 ++i;
+           ++j;
+					}
+					else
+					{
+					  ++i;
+					}
+       } 
+      else 
+      {
+           j = next[j]; // j回到指定位置
+      }
+    }
+
+    if (j == Sub_Len) 
+    {
+       return i - j;
+    } 
+    else 
+    {
+       return -1;
+    }
+}
